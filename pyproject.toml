@@ -2,6 +2,7 @@
 name = "poolesville-hackathon"
 version = "1.0.0"
 description = "Our group's solution for the poolesville_hacks hackathon."
+authors=["Shayaan Wadkar", "Saraansh Wadkar", "Rehan Kabir"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
