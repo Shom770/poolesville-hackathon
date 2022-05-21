@@ -1,3 +1,8 @@
+[tool.poetry]
+name = "poolesville-hackathon"
+version = "1.0.0"
+description = "Our group's solution for the poolesville_hacks hackathon."
+
 [tool.poetry.dependencies]
 python = "^3.9"
 
