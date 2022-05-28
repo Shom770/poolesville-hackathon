@@ -1,5 +1,4 @@
 import datetime
-import json
 
 import requests
 from suntime import Sun
@@ -81,6 +80,35 @@ def hourly_forecast(location, go_out=6):
             "description": forecast,
             "daytime": daytime,
             "icon": icon
+        })
+
+    return filtered_json
+
+
+def current_alerts(location, include_text=False):
+    """
+    Spec of json:
+    {
+        "start_time": datetime.datetime instance,
+        "end_time": datetime.datetime instance,
+        "name": Name of event (like Winter Storm Warning),
+        "event_text": Whole event text, including hazards, direction of storm if it's a severe storm, etc.
+        (only includes text if include_text is True)
+    }
+    """
+    alerts_json = SESSION.get(
+        f"https://api.weather.gov/alerts/active",
+        params={"point": f"{location[0]},{location[1]}"}
+    ).json()["features"]
+    filtered_json = []
+
+    for alert in alerts_json:
+        alert_prop = alert["properties"]
+        filtered_json.append({
+            "start_time": datetime.datetime.fromisoformat(alert_prop["onset"]),
+            "end_time": datetime.datetime.fromisoformat(alert_prop["expires"]),
+            "name": alert_prop["event"],
+            "event_text": alert_prop["description"] if include_text else None
         })
 
     return filtered_json
