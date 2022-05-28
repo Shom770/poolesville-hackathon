@@ -63,8 +63,18 @@ def current_observations(location, utc_offset):
     elif 'snow' in text_desc:
         icon = "static/snowy.png"
 
-    temperature = (response["temperature"]["value"] * (9 / 5)) + 32  # Convert celsius to fahrenheit
-    wind_speed = (response["windSpeed"]["value"] / 1.609344)  # Convert km/h to mph
+    if response["temperature"]["value"] is None:
+        temp = 0
+    else:
+        temp = response["temperature"]["value"]
+
+    if response["windSpeed"]["value"] is None:
+        ws = 0
+    else:
+        ws = response["temperature"]["value"]
+
+    temperature = (temp * (9 / 5)) + 32  # Convert celsius to fahrenheit
+    wind_speed = (ws / 1.609344)  # Convert km/h to mph
 
     return icon, round(temperature), round(wind_speed)
 
@@ -96,7 +106,6 @@ def hourly_forecast(location, go_out=24):
         sunset = sun.get_sunset_time(time) - datetime.timedelta(hours=utc_offset * -1)
 
         daytime = sunrise.hour <= time.hour <= sunset.hour
-
         if 'mostly clear' in forecast or 'mostly sunny' in forecast:
             if daytime:
                 icon = "static/mostly_clear.png"
@@ -168,9 +177,11 @@ def current_alerts(location, include_text=False):
             continue
 
         filtered_json.append({
-            "start_time": datetime.datetime.fromisoformat(alert_prop["onset"]),
-            "end_time": datetime.datetime.fromisoformat(alert_prop["expires"]),
+            "start_time": datetime.datetime.fromisoformat(alert_prop["onset"]).strftime('%I:%M %p').lower().lstrip("0"),
+            "end_time": datetime.datetime.fromisoformat(alert_prop["expires"]).strftime('%I:%M %p').lower().lstrip("0"),
             "name": alert_prop["event"],
+            "severity": alert_prop["severity"],
+            "certainty": alert_prop["certainty"],
             "event_text": alert_prop["description"] if include_text else None
         })
 
