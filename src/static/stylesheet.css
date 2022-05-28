@@ -10,6 +10,16 @@
   align-items: center;
 }
 
+.no-pos-box {
+  display: flex;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+
+}
+
 .slight-transparent {
     opacity: 0.9;
 }
@@ -45,4 +55,27 @@
 
 .centered {
     justify-content: center;
+}
+
+.subbox {
+  display: flex;
+  width: 32vw;
+  height: 30vh;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+  background-color: white;
+  opacity: 0.8;
+  border-radius: 3em;
+  background: #93BFDF;
+}
+
+#hourly-fcst {
+    position: absolute;
+    top: 56vh;
+    left: 7vw;
+    width: 86vw;
+    justify-content: center;
+    align-items: center;
 }

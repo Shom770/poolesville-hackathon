@@ -18,7 +18,111 @@
         <h1><a class="page" href={{ url_for("critical_updates")}}>critical updates</a></h1>
     </div>
     <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1;">
+        <div class="box subbox slight-transparent" style="top: 20vh; left: 7vw;">
+            <h1 class="montserrat" style="position: absolute; top: 2vh; left: 2vw; font-size: 1.6rem; font-weight: bold;">
+                {{ date_fmt }}
+            </h1>
+            <h1 class="montserrat" style="position: absolute; top: 6.5vh; left: 2vw; font-size: 1rem; font-weight: 200;">
+                {{ city_name }}
+            </h1>
+            <img src={{ icon_url }} height="150px" width="150px" style="position: absolute; top: 10.5vh; left: 2vw;">
+            <h1 class="montserrat" style="position: absolute; top: 7vh; left: 17.5vw; font-size: 3rem; font-weight: bold;">
+                {{ temperature }}° F
+            </h1>
+            <h1 class="montserrat" style="position: absolute; top: 15vh; left: 17.5vw; font-size: 1.6rem; font-weight: 400;">
+                {{ wind_speed }} mph
+            </h1>
+        </div>
+        <div class="box subbox slight-transparent" id="hourly-fcst">
+            <div class="no-pos-box centered" style="flex-direction: column;">
+                <h1 class="montserrat" style="font-size: 2rem; font-weight: bold;">
+                    {{ hour_1["time"] }}
+                </h1>
+                <img src={{ hour_1["icon"] }} width="100px" height="100px">
+                <h1 class="montserrat" style="font-size: 1.4rem; margin-top: 1em;">
+                    {{ hour_1["temperature"] }}° F
+                </h1>
+                <h1 class="montserrat" style="font-size: 1rem; font-weight: 400; margin-top: -0.75em;">
+                    {{ hour_1["wind_speed"] }} {{ hour_1["wind_direction"] }}
+                </h1>
+            </div>
 
+            <h1 class="separator" style="font-size: 6rem; margin-left: -0.25em; margin-right: -0.25em;"> | </h1>
+
+            <div class="no-pos-box centered" style="flex-direction: column;">
+                <h1 class="montserrat" style="font-size: 2rem; font-weight: bold;">
+                    {{ hour_2["time"] }}
+                </h1>
+                <img src={{ hour_2["icon"] }} width="100px" height="100px">
+                <h1 class="montserrat" style="font-size: 1.4rem; margin-top: 1em;">
+                    {{ hour_2["temperature"] }}° F
+                </h1>
+                <h1 class="montserrat" style="font-size: 1rem; font-weight: 400; margin-top: -0.75em;">
+                    {{ hour_2["wind_speed"] }} {{ hour_2["wind_direction"] }}
+                </h1>
+            </div>
+
+            <h1 class="separator" style="font-size: 6rem; margin-left: -0.25em; margin-right: -0.25em;"> | </h1>
+
+            <div class="no-pos-box centered" style="flex-direction: column;">
+                <h1 class="montserrat" style="font-size: 2rem; font-weight: bold;">
+                    {{ hour_3["time"] }}
+                </h1>
+                <img src={{ hour_3["icon"] }} width="100px" height="100px">
+                <h1 class="montserrat" style="font-size: 1.4rem; margin-top: 1em;">
+                    {{ hour_3["temperature"] }}° F
+                </h1>
+                <h1 class="montserrat" style="font-size: 1rem; font-weight: 400; margin-top: -0.75em;">
+                    {{ hour_3["wind_speed"] }} {{ hour_3["wind_direction"] }}
+                </h1>
+            </div>
+
+            <h1 class="separator" style="font-size: 6rem; margin-left: -0.25em; margin-right: -0.25em;"> | </h1>
+
+            <div class="no-pos-box centered" style="flex-direction: column;">
+                <h1 class="montserrat" style="font-size: 2rem; font-weight: bold;">
+                    {{ hour_4["time"] }}
+                </h1>
+                <img src={{ hour_4["icon"] }} width="100px" height="100px">
+                <h1 class="montserrat" style="font-size: 1.4rem; margin-top: 1em;">
+                    {{ hour_4["temperature"] }}° F
+                </h1>
+                <h1 class="montserrat" style="font-size: 1rem; font-weight: 400; margin-top: -0.75em;">
+                    {{ hour_4["wind_speed"] }} {{ hour_4["wind_direction"] }}
+                </h1>
+            </div>
+
+            <h1 class="separator" style="font-size: 6rem; margin-left: -0.25em; margin-right: -0.25em;"> | </h1>
+
+            <div class="no-pos-box centered" style="flex-direction: column;">
+                <h1 class="montserrat" style="font-size: 2rem; font-weight: bold;">
+                    {{ hour_5["time"] }}
+                </h1>
+                <img src={{ hour_2["icon"] }} width="100px" height="100px">
+                <h1 class="montserrat" style="font-size: 1.4rem; margin-top: 1em;">
+                    {{ hour_5["temperature"] }}° F
+                </h1>
+                <h1 class="montserrat" style="font-size: 1rem; font-weight: 400; margin-top: -0.75em;">
+                    {{ hour_5["wind_speed"] }} {{ hour_5["wind_direction"] }}
+                </h1>
+            </div>
+
+            <h1 class="separator" style="font-size: 6rem; margin-left: -0.25em; margin-right: -0.25em;"> | </h1>
+
+            <div class="no-pos-box centered" style="flex-direction: column;">
+                <h1 class="montserrat" style="font-size: 2rem; font-weight: bold;">
+                    {{ hour_6["time"] }}
+                </h1>
+                <img src={{ hour_6["icon"] }} width="100px" height="100px">
+                <h1 class="montserrat" style="font-size: 1.4rem; margin-top: 1em;">
+                    {{ hour_6["temperature"] }}° F
+                </h1>
+                <h1 class="montserrat" style="font-size: 1rem; font-weight: 400; margin-top: -0.75em;">
+                    {{ hour_6["wind_speed"] }} {{ hour_6["wind_direction"] }}
+                </h1>
+            </div>
+
+        </div>
     </div>
     <div class="box centered slight-transparent" style="top: 92.5vh; height: 7.5vh; background: #548CAC; z-index: 2;">
         <h1 class="montserrat" style="color: white; font-size: 1.2rem; font-weight: 300;">
