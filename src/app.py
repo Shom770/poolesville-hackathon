@@ -5,6 +5,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    location = 39.14, -77.28
+
     return render_template("index.html")
 
 
