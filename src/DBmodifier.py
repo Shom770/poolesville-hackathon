@@ -16,7 +16,7 @@ class DBModifier():
 
     def get_user(
         self,
-        user_id: str
+        user_id: int
     ) -> Optional[Users]:
         query = self.session.query(Users)
         if user_id is not None:
@@ -25,7 +25,6 @@ class DBModifier():
 
     def add_user(
         self,
-        id: str,
         username: str,
         password: str,
         latitude: float,
@@ -35,35 +34,35 @@ class DBModifier():
         num_of_complaints: int,
         trust_level: str
     ):
-        if not self.get_user(user_id=id):
-            user_object = Users(
-                id = id,
-                username=username,
-                password=password,
-                latitude=latitude,
-                longitude=longitude,
-                num_of_likes=num_of_likes,
-                num_of_posts=num_of_posts,
-                num_of_complaints=num_of_complaints,
-                trust_level = TrustLevel(trust_level)
-            )
-            self.session.add(user_object)
+        user_object = Users(
+            username=username,
+            password=password,
+            latitude=latitude,
+            longitude=longitude,
+            num_of_likes=num_of_likes,
+            num_of_posts=num_of_posts,
+            num_of_complaints=num_of_complaints,
+            trust_level = TrustLevel(trust_level)
+        )
+        self.session.add(user_object)
     
     def get_post(
         self,
-        post_id: int,
+        post_id: int = None,
         user_id: Optional[str] = None
-    ) -> Optional[Posts]:
+    ) -> Optional[List[Posts]]:
         query = self.session.query(Posts)
+
         if post_id is not None:
             query = query.filter(Posts.id == post_id)
+        
         if user_id is not None:
             query = query.filter(Posts.author_id == user_id)
+        
         return query.all() if query is not None else None
     
     def add_post(
         self,
-        id: str,
         author_id: str,
         latitude: float,
         longitude: float,
@@ -74,7 +73,6 @@ class DBModifier():
     ):
         if not self.get_post(post_id=id, user_id=None):
             post_object = Posts(
-                id=id,
                 author_id=author_id,
                 latitude=latitude,
                 longitude=longitude,
@@ -87,7 +85,7 @@ class DBModifier():
     
     def modify_user(
         self,
-        id: str,
+        id: int,
         username: str = None,
         password: str = None,
         latitude: float = None,
@@ -97,7 +95,7 @@ class DBModifier():
         num_of_complaints: int = None,
         trust_level: str = None
     ):
-        user = self.get_user(user_id=id)
+        user = self.get_user(user_id=id)[0]
 
         if username is not None:
             user.username = username
@@ -128,15 +126,15 @@ class DBModifier():
     def modify_post(
         self,
         id: str,
-        author_id: str,
-        latitude: float,
-        longitude: float,
-        time: datetime,
-        message: str,
-        likes: int,
-        reports: int
+        author_id: str = None,
+        latitude: float = None,
+        longitude: float = None,
+        time: datetime = None,
+        message: str = None,
+        likes: str = None,
+        reports: str = None
     ):
-        post = self.get_post(post_id=id)
+        post = self.get_post(post_id=id)[0]
         
         if author_id is not None:
             post.author_id = author_id
@@ -160,6 +158,54 @@ class DBModifier():
             post.reports = reports
         
         self.session.commit()
+    
+    def get_likes_of_post(
+        self,
+        post_id: int
+    ) -> List[str]:
+        post = self.get_post(post_id=post_id)[0]
+        return str(post.likes).split(";")
+    
+    def get_reports_of_post(
+        self,
+        post_id: int
+    ) -> List[str]:
+        post = self.get_post(post_id=post_id)[0]
+        return str(post.likes).split(";")
+    
+    def get_post_owner(
+        self,
+        post_id: int
+    ) -> int:
+        post = self.get_post(post_id=post_id)[0]
+        return post.author_id
+    
+    def get_total_user_likes(
+        self,
+        user_id: int
+    ) -> int:
+        user = self.get_user(user_id = user_id)[0]
+        return user.num_of_likes
+    
+    def get_total_user_reports(
+        self,
+        user_id: int
+    ) -> int:
+        user = self.get_user(user_id = user_id)[0]
+        return user.num_of_complaints
+    
+    def get_total_user_posts(
+        self,
+        user_id: int
+    ) -> int:
+        user = self.get_user(user_id = user_id)[0]
+        return user.num_of_posts
+
+
+
+
+
+
 
 
         

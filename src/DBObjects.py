@@ -27,7 +27,7 @@ class TrustLevel(enum.Enum):
 
 class Users(Base):
     __tablename__ = "users"
-    id = Column(String(50), primary_key=True)
+    id = Column(Integer, primary_key=True)
     posts = relationship("Posts", back_populates="users")
 
     username = Column(String(50))
@@ -65,15 +65,15 @@ class Posts(Base):
     users = relationship("Users", foreign_keys="Posts.author_id")
 
     id = Column(Integer, primary_key=True)
-    author_id = Column(String(50), ForeignKey("users.id"))
+    author_id = Column(Integer, ForeignKey("users.id"))
 
     latitude = Column(Float)
     longitude = Column(Float)
     time = Column(DateTime)
 
     message = Column(Text)
-    likes = Column(Integer)
-    reports = Column(Integer)
+    likes = Column(Text) #stored with a ; separator
+    reports = Column(Text) #stored with a ; separator
 
     def __repr__(self) -> str:
         return f"<Post id={self.id} author_id={self.author_id} longitude={self.longitude} latitude={self.latitude}"
@@ -85,6 +85,7 @@ class Posts(Base):
                 "author_id": self.author_id,
                 "latitude": self.latitude,
                 "longitude": self.longitude,
+                "time": self.time,
                 "message": self.message,
                 "likes": self.likes,
                 "complaints": self.reports
