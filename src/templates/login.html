@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/stylesheet.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <title>WxWatcher</title>
+</head>
+<body>
+    <div class="box centered slight-transparent" style="height: 7.5vh; background: #548CAC; z-index: 2;">
+        <h1 class="montserrat" style="color: white; margin-right: 25vw;">WxWatcher</h1>
+        <h1><a class="page" style="margin-left: 25vw;" href={{ url_for("home")}}>home</a></h1>
+        <h1 class="separator"> | </h1>
+        <h1><a class="page active-page" href={{ url_for("login")}}>login</a></h1>
+        <h1 class="separator"> | </h1>
+        <h1><a class="page" href={{ url_for("critical_updates")}}>critical updates</a></h1>
+    </div>
+    <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1;">
+
+    </div>
+    <div class="box centered slight-transparent" style="top: 92.5vh; height: 7.5vh; background: #548CAC; z-index: 2;">
+        <h1 class="montserrat" style="color: white; font-size: 1.5rem; font-weight: 300;">
+            made with <3 by saraansh, rehan, and shayaan
+        </h1>
+    </div>
+</body>
+</html>
