@@ -7,6 +7,9 @@ from sqlalchemy import (
     Float,
     Text,
     Enum,
+    Numeric,
+    DateTime
+    
 
 )
 from sqlalchemy.orm import relationship, sessionmaker
@@ -20,7 +23,6 @@ class TrustLevel(enum.Enum):
     basic = "basic"
     member = "member"
     regular = "regular"
-
 
 
 class Users(Base):
@@ -62,10 +64,11 @@ class Posts(Base):
     users = relationship("Users", foreign_keys="Posts.author_id")
 
     id = Column(Integer, primary_key=True)
-    author_id = Column(String(50), ForeignKey(Users.id))
+    author_id = Column(String(50), ForeignKey("users.id"))
 
     latitude = Column(Float)
     longitude = Column(Float)
+    time = Column(DateTime)
 
     message = Column(Text)
     likes = Column(Integer)
