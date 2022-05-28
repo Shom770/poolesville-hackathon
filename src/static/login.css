@@ -51,3 +51,12 @@ input:focus {
 .log-in:hover {
     background-color: #C4DFEE;
 }
+
+.sign-up {
+    text-decoration: none;
+    color: white;
+}
+
+.sign-up:hover {
+    color: #CADFF0;
+}
