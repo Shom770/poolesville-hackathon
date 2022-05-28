@@ -1,0 +1,53 @@
+.login-div {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.5em;
+    align-items: center;
+    background: #548CAC;
+    opacity: 75%;
+    width: 30vw;
+    height: 60vh;
+    border-radius: 20%;
+}
+
+hr {
+    color: white;
+    width: 50%;
+    border-width: 10%;
+    border-radius: 50%;
+}
+
+input {
+    border-radius: 50em;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    padding-left: 10%;
+    padding-right: 10%;
+    height: 7.5%;
+    width: 40%
+}
+
+input:focus {
+    outline: none;
+}
+
+.log-in {
+    border-radius: 25em;
+    font-family: 'Montserrat', sans-serif;
+    color: #548CAC;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 7.5%;
+    border: none;
+    background-color: #9BC8E2;
+    padding: 2%;
+    width: 30%;
+}
+
+.log-in:hover {
+    background-color: #C4DFEE;
+}
