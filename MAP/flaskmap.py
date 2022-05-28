@@ -35,5 +35,3 @@ def mapview():
     )
     return render_template('example.html', mymap=mymap, sndmap=sndmap)
 
-if __name__ == "__main__":
-    app.run(debug=True)
