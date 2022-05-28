@@ -1,0 +1,5 @@
+flask
+turbo-flask
+sqlalchemy
+flask_sqlalchemy
+pymysql
