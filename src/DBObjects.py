@@ -48,15 +48,16 @@ class Users(Base):
     @property
     def serialize(self):
         return {
-            "user_id": self.id,
-            "username": self.username,
-            "password": self.password,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "num_of_likes": self.num_of_likes,
-            "num_of_posts": self.num_of_posts,
-            "num_of_complaints": self.num_of_complaints,
-            "trust_level": self.trust_level.name
+            self.id: {
+                "username": self.username,
+                "password": self.password,
+                "latitude": self.latitude,
+                "longitude": self.longitude,
+                "num_of_likes": self.num_of_likes,
+                "num_of_posts": self.num_of_posts,
+                "num_of_complaints": self.num_of_complaints,
+                "trust_level": self.trust_level.name
+            }
         }
 
 class Posts(Base):
@@ -80,13 +81,14 @@ class Posts(Base):
     @property
     def serialize(self):
         return {
-            "post_id": self.id,
-            "author_id": self.author_id,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "message": self.message,
-            "likes": self.likes,
-            "complaints": self.reports,
+            self.id : { 
+                "author_id": self.author_id,
+                "latitude": self.latitude,
+                "longitude": self.longitude,
+                "message": self.message,
+                "likes": self.likes,
+                "complaints": self.reports
+            }
         }
 
 

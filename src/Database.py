@@ -41,7 +41,7 @@ database.add_post(
     reports = 2,
 )
 
-print(database.get_post(1, user_id=None))
+print(database.get_post(1))
 database.session.commit()
 
 
