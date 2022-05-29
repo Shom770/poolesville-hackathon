@@ -65,7 +65,6 @@
   overflow-x: hidden;
   overflow-y: hidden;
   align-items: center;
-  background-color: white;
   opacity: 0.8;
   border-radius: 3em;
   background: #93BFDF;
@@ -78,4 +77,5 @@
     width: 86vw;
     justify-content: center;
     align-items: center;
+    opacity: 0.6;
 }

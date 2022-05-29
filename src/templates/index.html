@@ -16,6 +16,8 @@
         <h1><a class="page" href={{ url_for("login")}}>login</a></h1>
         <h1 class="separator"> | </h1>
         <h1><a class="page" href={{ url_for("critical_updates")}}>critical updates</a></h1>
+        <h1 class="separator"> | </h1>
+        <h1><a class="page" href={{ url_for("reports")}}>reports</a></h1>
     </div>
     <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1;">
         <div class="box subbox slight-transparent" style="top: 20vh; left: 7vw;">
@@ -32,6 +34,46 @@
             <h1 class="montserrat" style="position: absolute; top: 15vh; left: 17.5vw; font-size: 1.6rem; font-weight: 400;">
                 {{ wind_speed }} mph
             </h1>
+        </div>
+        <div class="box subbox slight-transparent" style="top: 20vh; left: 42vw; width: 51vw; opacity: 1;">
+            <div class="no-pos-box centered">
+                {% if no_alerts == False %}
+                <img src="static/sunny.png" width="100px" height="100px" style="margin-left: 30%; margin-right: -27.5%;">
+                <div class="no-pos-box centered" style="flex-direction: column;">
+                    <h1 class="montserrat" style="font-size: 1.8rem;">No current alerts</h1>
+                    <h1 class="montserrat" style="font-size: 1.4rem; font-weight: 400; margin-top: -0.5em;">Chill back and relax!</h1>
+                </div>
+                {% else %}
+                    <h1 class="montserrat" style="left: 10%; font-size: 5.5rem; font-weight: 400; margin-left: 2.5%">
+                        <a style="text-decoration: none; color: white;" href=javascript:;" onclick="this.href='/?page=' + {{ page - 1 }}"><</a>
+                    </h1>
+                    <div class="no-pos-box centered" style="flex-direction: column;">
+                        <h1 class="montserrat" style="font-size: 1.6rem;">{{ alert["name"] }}</h1>
+                        <h1 class="montserrat" style="font-size: 1.2rem; font-weight: 400; margin-top: -0.5em;">
+                            {{ alert["start_time"] }} till {{ alert["end_time"] }}
+                        </h1>
+                        <h1 class="montserrat" style="font-size: 1.2rem; font-weight: 400;">
+                            <span>
+                                <b>
+                                    Severity:
+                                </b>
+                            </span>
+                            {{ alert["severity"] }}
+                        </h1>
+                        <h1 class="montserrat" style="font-size: 1.2rem; font-weight: 400; margin-top: -0.5em;">
+                            <span>
+                                <b>
+                                    Certainty:
+                                </b>
+                            </span>
+                            {{ alert["certainty"] }}
+                        </h1>
+                    </div>
+                    <h1 class="montserrat" style="left: 10%; font-size: 5.5rem; font-weight: 400; margin-right: 2.5%;">
+                        <a style="text-decoration: none; color: white;" href=javascript:;" onclick="this.href='/?page=' + {{ page + 1 }}">></a>
+                    </h1>
+                {% endif %}
+            </div>
         </div>
         <div class="box subbox slight-transparent" id="hourly-fcst">
             <div class="no-pos-box centered" style="flex-direction: column;">
@@ -98,7 +140,7 @@
                 <h1 class="montserrat" style="font-size: 2rem; font-weight: bold;">
                     {{ hour_5["time"] }}
                 </h1>
-                <img src={{ hour_2["icon"] }} width="100px" height="100px">
+                <img src={{ hour_5["icon"] }} width="100px" height="100px">
                 <h1 class="montserrat" style="font-size: 1.4rem; margin-top: 1em;">
                     {{ hour_5["temperature"] }}° F
                 </h1>

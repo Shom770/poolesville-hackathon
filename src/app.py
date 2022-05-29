@@ -4,6 +4,7 @@ import geopy
 from flask import Flask, render_template, request, session, redirect
 import requests
 from flask_session import Session
+from flask import Flask, render_template, request
 
 from weather_information import current_alerts, current_observations, hourly_forecast
 from waitress import serve
@@ -58,6 +59,11 @@ def home():
 
     all_alerts = current_alerts(location)
     icon, temp, wind_speed = current_observations(location, utc_offset, new_fcst)
+
+    if page < 0:
+        page = 0
+    elif page >= len(all_alerts):
+        page = len(all_alerts) - 1
 
     if page < 0:
         page = 0
@@ -175,6 +181,11 @@ def make_a_report():
         all_reports = all_reports[-100:]
 
     return render_template("make_a_report.html", type=weather_type)
+
+
+@app.route("/reports")
+def reports():
+    return render_template("reports.html")
 
 
 if __name__ == "__main__":
