@@ -9,15 +9,15 @@
   "2": {
     "trust": "M",
     "message": "message text2",
-    "time": "2022-05-29 01:55:40.144805",
-    "distance": 1,
+    "time": 25,
+    "distance": 1.0,
     "likes": 2
   },
   "3": {
-    "trust": "Basic",
+    "trust": "B",
     "message": "message text3",
-    "time": "2022-05-29 01:55:40.144805",
-    "distance": 4,
+    "time": 19,
+    "distance": 4.0,
     "likes": 5
   }
 }

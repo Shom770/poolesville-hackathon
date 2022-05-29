@@ -9,8 +9,6 @@ from sqlalchemy import (
     Enum,
     Numeric,
     DateTime
-    
-
 )
 from sqlalchemy.orm import relationship, sessionmaker
 import enum
@@ -27,7 +25,7 @@ class TrustLevel(enum.Enum):
 
 class Users(Base):
     __tablename__ = "users"
-    id = Column(String(50), primary_key=True)
+    id = Column(Integer, primary_key=True)
     posts = relationship("Posts", back_populates="users")
 
     username = Column(String(50))
@@ -48,15 +46,16 @@ class Users(Base):
     @property
     def serialize(self):
         return {
-            "user_id": self.id,
-            "username": self.username,
-            "password": self.password,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "num_of_likes": self.num_of_likes,
-            "num_of_posts": self.num_of_posts,
-            "num_of_complaints": self.num_of_complaints,
-            "trust_level": self.trust_level.name
+            self.id: {
+                "username": self.username,
+                "password": self.password,
+                "latitude": self.latitude,
+                "longitude": self.longitude,
+                "num_of_likes": self.num_of_likes,
+                "num_of_posts": self.num_of_posts,
+                "num_of_complaints": self.num_of_complaints,
+                "trust_level": self.trust_level.name
+            }
         }
 
 class Posts(Base):
@@ -64,15 +63,15 @@ class Posts(Base):
     users = relationship("Users", foreign_keys="Posts.author_id")
 
     id = Column(Integer, primary_key=True)
-    author_id = Column(String(50), ForeignKey("users.id"))
+    author_id = Column(Integer, ForeignKey("users.id"))
 
     latitude = Column(Float)
     longitude = Column(Float)
     time = Column(DateTime)
 
     message = Column(Text)
-    likes = Column(Integer)
-    reports = Column(Integer)
+    likes = Column(Text) #stored with a ; separator
+    reports = Column(Text) #stored with a ; separator
 
     def __repr__(self) -> str:
         return f"<Post id={self.id} author_id={self.author_id} longitude={self.longitude} latitude={self.latitude}"
@@ -80,13 +79,14 @@ class Posts(Base):
     @property
     def serialize(self):
         return {
-            "post_id": self.id,
-            "author_id": self.author_id,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "message": self.message,
-            "likes": self.likes,
-            "complaints": self.reports,
-        }
+                "post_id": self.id,
+                "author_id": self.author_id,
+                "latitude": self.latitude,
+                "longitude": self.longitude,
+                "time": self.time,
+                "message": self.message,
+                "likes": self.likes,
+                "complaints": self.reports
+            }
 
 

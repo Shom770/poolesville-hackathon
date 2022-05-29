@@ -1,10 +1,11 @@
 import datetime
+import json
 
 import geopy
 from flask import Flask, render_template, request, session, redirect
+import geopy.distance
 import requests
 from flask_session import Session
-from flask import Flask, render_template, request
 
 from weather_information import current_alerts, current_observations, hourly_forecast
 from waitress import serve
@@ -65,11 +66,6 @@ def home():
     elif page >= len(all_alerts):
         page = len(all_alerts) - 1
 
-    if page < 0:
-        page = 0
-    elif page >= len(all_alerts):
-        page = len(all_alerts) - 1
-
     return render_template(
         "index.html",
         date_fmt=cur_time_fmt,
@@ -86,7 +82,7 @@ def home():
         no_alerts=bool(all_alerts),
         alert=all_alerts[page] if all_alerts else None,
         page=page,
-        session_name = session["name"]
+        # session_name = session["name"]
     )
 
 
@@ -114,9 +110,16 @@ def logout():
 
 @app.route("/criticalupdates")
 def critical_updates():
+    with open("static/sample.json") as file:
+        sample_json = list(json.loads(file.read()).values())
+
+    positions = [35, 35 + 11, 35 + 22, 35 + 33]
+    sample_json = sorted(sample_json, key=lambda json: json["time"])[:4]
+
+
     return render_template(
         "critical-updates.html",
-        session_name = session["name"]
+        json=list(zip(sample_json, positions))
         )
 
 
@@ -157,8 +160,9 @@ def reports():
             (dist, *report[:-1], int((datetime.datetime.utcnow() - report[-1]).total_seconds() // 60))
         )
 
+    filter_reports = [(0.1, (39.1881, -77.2335), 'Hail (1")', 1), (0.5, (39.1881, -77.2335), 'Sleet', 5), (0.9, (39.1881, -77.2335), 'Flooding', 19), (1, (39.1881, -77.2335), 'Sleet and Freezing Rain', 12), (1.2, (39.1881, -77.2335), 'Hail (0.25")', 21)]
     filter_reports = sorted(filter_reports, key=lambda x: x[0])[:5]
-    filter_reports = [(0.0, (39.1881, -77.2335), 'Hail (1")', 0), (0.0, (39.1881, -77.2335), 'Sleet', 0), (0.0, (39.1881, -77.2335), 'Flooding', 0), (0.0, (39.1881, -77.2335), 'Sleet and Freezing Rain', 0), (0.0, (39.1881, -77.2335), 'Hail (0.25")', 0)]
+    filter_reports = sorted(filter_reports, key=lambda x: x[-1])[:5]
 
     return render_template("reports.html", reports=filter_reports)
 
@@ -181,11 +185,6 @@ def make_a_report():
         all_reports = all_reports[-100:]
 
     return render_template("make_a_report.html", type=weather_type)
-
-
-@app.route("/reports")
-def reports():
-    return render_template("reports.html")
 
 
 if __name__ == "__main__":
