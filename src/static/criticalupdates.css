@@ -1,0 +1,110 @@
+.commentbox {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.5em;
+    align-items: center;
+    background: #548CAC;
+    opacity: 75%;
+    width: 60vw;
+    height: 70vh;
+    /*border-radius: 20%;*/
+}
+
+input {
+    /*border-radius: 50em;*/
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    padding-left: 2%;
+    padding-right: 10%;
+    height: 4vw;
+    width: 42vw
+}
+
+input:focus {
+    outline: none;
+}
+
+input2 {
+    /*border-radius: 50em;*/
+    /*border-top-style: hidden;*/
+    /*border-right-style: hidden;*/
+    /*border-left-style: hidden;*/
+    /*border-bottom-style: hidden;*/
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    padding-left: 2%;
+    padding-right: 10%;
+    height: 2vw;
+    width:4vw
+}
+
+input2:focus {
+    outline: none;
+}
+
+
+.sendbutton {
+    border-radius: 25em;
+    font-family: 'Montserrat', sans-serif;
+    color: #548CAC;
+    font-weight: bold;
+    font-size: 1.2rem;
+    /*margin-top: 7.5%;*/
+    border: none;
+    background-color: #9BC8E2;
+    padding: 2%;
+    width: 20%;
+}
+
+.setbutton {
+    border-radius: 25em;
+    font-family: 'Montserrat', sans-serif;
+    color: #548CAC;
+    font-weight: bold;
+    font-size: 1rem;
+    /*margin-top: 7.5%;*/
+    border: none;
+    background-color: #9BC8E2;
+    padding: 2%;
+    width: 20%;
+}
+
+.leveliconcircle {
+    display: flex;
+    position: absolute;
+    height: 2vw;
+    width: 2vw;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    align-items: center;
+    border-radius: 25em;
+    background-color: darkgrey;
+}
+
+.realleveliconcircle {
+    display: flex;
+    position: absolute;
+    height: 3vw;
+    width: 3vw;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    align-items: center;
+    border-radius: 25em;
+    background-color: darkgrey;
+}
+
+.montserrat-icon {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: white;
+}
+
+.montserrat-legendtext {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: black;
+}

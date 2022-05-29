@@ -1,5 +1,7 @@
 import datetime
+import json
 
+import geopy
 from flask import Flask, render_template, request, session, redirect
 import geopy.distance
 import requests
@@ -80,7 +82,7 @@ def home():
         no_alerts=bool(all_alerts),
         alert=all_alerts[page] if all_alerts else None,
         page=page,
-        session_name = session["name"]
+        # session_name = session["name"]
     )
 
 
@@ -108,9 +110,16 @@ def logout():
 
 @app.route("/criticalupdates")
 def critical_updates():
+    with open("static/sample.json") as file:
+        sample_json = list(json.loads(file.read()).values())
+
+    positions = [35, 35 + 11, 35 + 22, 35 + 33]
+    sample_json = sorted(sample_json, key=lambda json: json["time"])[:4]
+
+
     return render_template(
         "critical-updates.html",
-        session_name = session["name"]
+        json=list(zip(sample_json, positions))
         )
 
 
