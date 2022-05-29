@@ -181,26 +181,26 @@ def modify_post():
     db.session.commit()
     return "Modified Post!"
 
-@app.route("/get_critical_updates/<threshold>", methods=["GET"])
-def get_critical_updates(threshold):
+@app.route("/get_critical_updates", methods=["GET"])
+def get_critical_updates():
+    data = request.args
     posts = db.get_post()
     outputjson = []
     for post in posts:
         c1 = (post.latitude, post.longitude)
-        c2 = db.get_coordinates(session["name"])
+        c2 = db.get_coordinates(data["uid"])
         distance = geopy.distance.geodesic(c1, c2).miles
-        if distance <= threshold:
-            outputjson.append(
-                {
-                "post_id": post.id,
-                "trust": db.get_trust_level(user_id=db.get_post_owner(post.id))[0:1].upper(),
-                "message": post.message,
-                "time": post.time,
-                "distance": distance,
-                "likes": len(db.get_likes_of_post(post_id=post.id))-1
-                }
-            )   
-    return json.dumps(outputjson.sort(key=lambda x: x["distance"])[::-1])
+        outputjson.append(
+            {
+            "post_id": post.id,
+            "trust": db.get_trust_level(user_id=db.get_post_owner(post.id))[0:1].upper(),
+            "message": post.message,
+            "time": 0 if int((datetime.utcnow() - post.time).total_seconds()) < 0 else int((datetime.utcnow() - post.time).total_seconds()),
+            "distance": round(distance,2),
+            "likes": len(db.get_likes_of_post(post_id=post.id))-1
+            }
+        ) 
+    return json.dumps(outputjson, default=str)
 
 
 if __name__ == "__main__":

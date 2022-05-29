@@ -222,14 +222,14 @@ class DBModifier():
         self,
         client_user_id: str
     ) -> tuple:
-        user = self.get_user(user_id=int(client_user_id[2:]))
+        user = self.get_user(user_id=int(client_user_id[2:]))[0]
         return (user.latitude, user.longitude)
         
     def get_trust_level(
         self,
         user_id: int
     ) -> str:
-        user = self.get_user(user_id=user_id)
+        user = self.get_user(user_id=user_id)[0]
         return user.trust_level.name
         
 

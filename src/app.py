@@ -46,9 +46,10 @@ Session(app)
 
 @app.route("/")
 def home():
-    userip = requests.get('https://api.ipify.org').text
-    response = requests.get(f"http://ip-api.com/json/{userip}").json()
-    location = (response["lat"], response["lon"])
+    # userip = requests.get('https://api.ipify.org').text
+    # response = requests.get(f"http://ip-api.com/json/{userip}").json()
+    # location = (response["lat"], response["lon"])
+    location = (35.04, -106.61)
 
     forecast, city_name, utc_offset = hourly_forecast(location)
     cur_time = datetime.datetime.utcnow() - datetime.timedelta(hours=utc_offset * -1)
@@ -109,19 +110,50 @@ def logout():
     return redirect("/")
 
 
-@app.route("/criticalupdates")
+@app.route("/criticalupdates", methods=["GET", "POST"])
 def critical_updates():
-    with open("static/sample.json") as file:
-        sample_json = list(json.loads(file.read()).values())
+    if request.method == "POST":
+        userip = requests.get('https://api.ipify.org').text
+        response = requests.get(f"http://ip-api.com/json/{userip}").json()
+        location = (response["lat"], response["lon"])
+        data = {
+            "threshold": request.form["threshold"],
+            "message": request.form["message"],
+            "author_id": session["name"][2:],
+            "latitude": location[0],
+            "longitude": location[1],
+            "likes": "",
+            "reports": ""
+        }
+        if request.form["forumbutton"] == "Send" and session["name"].startswith("wx"):
+            x = requests.post("http://127.0.0.1:8001/add_post", params=data)
+            if x.text == "Added post!":
+                return redirect("/criticalupdates")
+        elif request.form["forumbutton"] == "Set" and session["name"].startswith("wx"):
+            x = requests.get("http://127.0.0.1:8001/get_critical_updates", params={"threshold": request.form["threshold"], "uid": session["name"]})
+            positions = [35, 35 + 11, 35 + 22, 35 + 33]
+            sample_json = json.loads(x.text)
+            sample_json = sorted(sample_json, key=lambda json: json["time"])[:4]
+            return render_template(
+                "critical-updates.html",
+                json=list(zip(sample_json, positions)),
+                session_name = session["name"]
+            )
+    if request.method == "GET":
+        if session["name"] != None and session["name"].startswith("wx"):
+            x = requests.get("http://127.0.0.1:8001/get_critical_updates", params={"threshold": 20, "uid": session["name"]})
+            positions = [35, 35 + 11, 35 + 22, 35 + 33]
+            sample_json = json.loads(x.text)
+            sample_json = sorted(sample_json, key=lambda json: json["time"])[:4]
 
-    positions = [35, 35 + 11, 35 + 22, 35 + 33]
-    sample_json = sorted(sample_json, key=lambda json: json["time"])[:4]
+            return render_template(
+                "critical-updates.html",
+                json=list(zip(sample_json, positions)),
+                session_name = session["name"]
+                )
+        else:
+            return redirect("/login")
 
-
-    return render_template(
-        "critical-updates.html",
-        json=list(zip(sample_json, positions))
-        )
 
 
 @app.route("/signup", methods=["GET", "POST"])
