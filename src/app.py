@@ -83,7 +83,7 @@ def home():
         no_alerts=bool(all_alerts),
         alert=all_alerts[page] if all_alerts else None,
         page=page,
-        # session_name = session["name"]
+        session_name = session["name"]
     )
 
 

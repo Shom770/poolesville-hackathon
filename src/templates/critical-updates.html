@@ -20,18 +20,18 @@
         <h1 class="separator"> | </h1>
         <h1><a class="page" href={{ url_for("reports")}}>reports</a></h1>
     </div>
-    <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1;">
+    <form method = "POST" class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1;">
 
         <div style="position: absolute; top: 15vh; left: 6vw; width: 15vw; height: 10vh">
             <h1 class="montserrat-legendtext">Set Distance:</h1>
             <input type="number" placeholder="#" style="height: 2vw; width: 5vw; position: absolute; top: 5vh">
-            <button class="setbutton"; style="position: absolute; top: 5.5vh; left: 7.5vw">Set</button>
+            <button name="threshold" class="setbutton"; style="position: absolute; top: 5.5vh; left: 7.5vw">Set</button>
         </div>
 
         <div class = "commentbox centered">
             <span  style="position: absolute; top: 20vh; left: 22vw">
                 <input type="text" placeholder="Write your comment here">
-                <button class="sendbutton"; style="position: absolute; top: -1vh; left: 48vw">Send</button>
+                <button name="publish" class="sendbutton"; style="position: absolute; top: -1vh; left: 48vw">Send</button>
             </span>
             <div>
                 <!-- first update -->
@@ -41,23 +41,23 @@
                             <h1 id="trust" class="montserrat">{{ comment["trust"] }}</h1>
                         </div>
                         <div class="commentbox" style="position: absolute; top: 1vh; left: 3.5vw; height: 7vh; width: 35vw">
-                            <h1 id="message" class="montserrat-legendtext" style="position: absolute; top: -1vh; left: 0vw; line-height: 1.1em">{{ comment["message"] }}</h1>
+                            <h1 id="message" class="montserrat-legendtext" style="position: absolute; top: 0vh; left: 0vw; line-height: 1.1em">{{ comment["message"] }}</h1>
                         </div>
                         <div class="commentbox" style="position: absolute; top: 1vh; left: 40vw; height: 4vh; width: 18vw">
-                            <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 0vw; line-height: 1.1em">posted</h1>
-                            <h1 id="time" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 3.2vw; line-height: 1.1em">{{ comment["time"] }}</h1>
-                            <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 4.4vw; line-height: 1.1em">min ago, </h1>
-                            <h1 id="distance" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 8.4vw; line-height: 1.1em">{{ comment["distance"] }}</h1>
-                            <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 9.2vw; line-height: 1.1em">miles away</h1>
+                            <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: 0vh; left: 0vw; line-height: 1.1em">posted {{ comment["time"] }} min ago, {{ comment["distance"] }} miles away</h1>
+                            <!-- <h1 id="time" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: 0vh; left: 3vw; line-height: 1.1em">{{ comment["time"] }}</h1>
+                            <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 4.2vw; line-height: 1.1em">min ago, </h1>
+                            <h1 id="distance" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: 0vh; left: 8.2vw; line-height: 1.1em">{{ comment["distance"] }}</h1>
+                            <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 9.2vw; line-height: 1.1em">miles away</h1> -->
                         </div>
                         <div class="commentbox" style="position: absolute; bottom: 1vh; right: 4vw; height: 3vh; width: 5vw">
-                            <h1 id="likes" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; bottom: -1vh; left: 0vw; line-height: 1.1em"></h1>
-                            <button style="background-color: #548CAC; opacity: 100%; border: none; position: absolute; left: .7vw">
+                            <h1 id="likes" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; bottom: .5vh; left: 0vw; line-height: 1.1em"> {{ comment["likes"] }} </h1>
+                            <button name="like" style="background-color: #548CAC; opacity: 100%; border: none; position: absolute; left: .7vw">
                                 <img src="static/heart-icon-y1k.png" style="opacity: 100%"; height="16.85" width="16.85"/>
                             </button>
                         </div>
                         <div class="commentbox" style="opacity: 100%; position: absolute; bottom: 1vh; right: 0vw; height: 3vh; width: 5vw">
-                            <button style="background-color: #548CAC; opacity: 100%; border: none">
+                            <button name="report" style="background-color: #548CAC; opacity: 100%; border: none">
                                 <img src="static/1200px-White_flag_icon.svg.png" style="opacity: 100%"; height="16.85" width="12"/>
                             </button>
                         </div>
@@ -150,7 +150,7 @@
             </div>
         </div>
 
-    </div>
+    </form>
     <div class="box centered slight-transparent" style="top: 92.5vh; height: 7.5vh; background: #548CAC; z-index: 2;">
         <h1 class="montserrat" style="color: white; font-size: 1.2rem; font-weight: 300;">
             Logged in as {{ session_name }}. <a style="text-decoration: none; color: lightskyblue;" href=javascript:;" onclick="this.href='/logout'">Logout?</a>
