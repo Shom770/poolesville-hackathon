@@ -1,0 +1,81 @@
+.box {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+}
+
+.no-pos-box {
+  display: flex;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+
+}
+
+.slight-transparent {
+    opacity: 0.9;
+}
+
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: white;
+}
+
+.page {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    margin-left: 0.9em;
+    text-decoration: none;
+    color: white;
+}
+
+.active-page {
+    color: #96C6FF;
+}
+
+.page:hover {
+    color: #C0D5EE;
+}
+
+.separator {
+    font-size: 3rem;
+    color: white;
+    margin-left: 0.5em;
+    margin-top: 1.25%;
+}
+
+.centered {
+    justify-content: center;
+}
+
+.subbox {
+  display: flex;
+  width: 32vw;
+  height: 30vh;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+  opacity: 0.8;
+  border-radius: 3em;
+  background: #93BFDF;
+}
+
+#hourly-fcst {
+    position: absolute;
+    top: 56vh;
+    left: 7vw;
+    width: 86vw;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6;
+}
