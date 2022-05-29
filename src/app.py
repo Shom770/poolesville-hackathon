@@ -1,6 +1,10 @@
 import datetime
+import socket
 
+import requests
 from flask import Flask, render_template, request
+from flask_wtf import FlaskForm
+from wtforms import SelectField
 
 from weather_information import current_alerts, current_observations, hourly_forecast
 
@@ -9,7 +13,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    location = 35.61, -106.1
+    userip = requests.get('https://api.ipify.org').text
+    response = requests.get(f"http://ip-api.com/json/{userip}").json()
+    location = (response["lat"], response["lon"])
 
     forecast, city_name, utc_offset = hourly_forecast(location)
     cur_time = datetime.datetime.utcnow() - datetime.timedelta(hours=utc_offset * -1)
@@ -42,7 +48,7 @@ def home():
         hour_5=new_fcst[4],
         hour_6=new_fcst[5],
         no_alerts=bool(all_alerts),
-        alert=all_alerts[page],
+        alert=all_alerts[page] if bool(all_alerts) else None,
         page=page
     )
 
@@ -65,6 +71,11 @@ def sign_up():
 @app.route("/reports")
 def reports():
     return render_template("reports.html")
+
+
+@app.route("/make-a-report")
+def make_a_report():
+    return render_template("make_a_report.html")
 
 
 if __name__ == "__main__":

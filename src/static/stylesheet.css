@@ -79,3 +79,21 @@
     align-items: center;
     opacity: 0.6;
 }
+
+.report-btn {
+    border-radius: 25em;
+    font-family: 'Montserrat', sans-serif;
+    color: #548CAC;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 10%;
+    border: none;
+    background-color: #9BC8E2;
+    padding: 3%;
+    width: 30vw;
+}
+
+.report-btn:hover {
+    background-color: #75A8C6;
+    color: white;
+}

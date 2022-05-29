@@ -20,14 +20,26 @@
         <h1><a class="page active-page" href={{ url_for("reports")}}>reports</a></h1>
     </div>
     <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1; flex-direction: column;">
-        <h1 class="montserrat" style="font-size: 1rem; margin-top: 10%; color: #548CAC">
-            Want to make a report?
-            <span>
-                <a href={{ url_for("make_a_report") }} style="text-decoration: none; color: #75A8C6;">
-                    <b>Make a report.</b>
-                </a>
-            </span>
+      <div class="box centered" style="background: #75A8C6; top: 20vh; left: 25vw; width: 50vw; height: 10vh; border-radius: 50em;">
+        <h1 class="montserrat" style="color: white; font-size: 2rem;">
+          CHOOSE A CATEGORY FOR THE REPORT
         </h1>
+      </div>
+      <a href="javascript:;" onclick="this.href='/make-a-report?type=svr'">
+        <button class="report-btn" style="margin-top: 2%;">
+          SEVERE WEATHER
+        </button>
+      </a>
+      <a href="javascript:;" onclick="this.href='/make-a-report?type=winter'">
+        <button class="report-btn">
+          WINTER WEATHER
+        </button>
+      </a>
+      <a href="javascript:;" onclick="this.href='/make-a-report?type=misc'">
+        <button class="report-btn">
+          MISCELLANEOUS WEATHER
+        </button>
+      </a>
     </div>
     <div class="box centered slight-transparent" style="top: 92.5vh; height: 7.5vh; background: #548CAC; z-index: 2;">
         <h1 class="montserrat" style="color: white; font-size: 1.2rem; font-weight: 300;">
