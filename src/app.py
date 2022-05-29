@@ -151,8 +151,9 @@ def reports():
             (dist, *report[:-1], int((datetime.datetime.utcnow() - report[-1]).total_seconds() // 60))
         )
 
+    filter_reports = [(0.1, (39.1881, -77.2335), 'Hail (1")', 1), (0.5, (39.1881, -77.2335), 'Sleet', 5), (0.9, (39.1881, -77.2335), 'Flooding', 19), (1, (39.1881, -77.2335), 'Sleet and Freezing Rain', 12), (1.2, (39.1881, -77.2335), 'Hail (0.25")', 21)]
     filter_reports = sorted(filter_reports, key=lambda x: x[0])[:5]
-    filter_reports = [(0.0, (39.1881, -77.2335), 'Hail (1")', 0), (0.0, (39.1881, -77.2335), 'Sleet', 0), (0.0, (39.1881, -77.2335), 'Flooding', 0), (0.0, (39.1881, -77.2335), 'Sleet and Freezing Rain', 0), (0.0, (39.1881, -77.2335), 'Hail (0.25")', 0)]
+    filter_reports = sorted(filter_reports, key=lambda x: x[-1])[:5]
 
     return render_template("reports.html", reports=filter_reports)
 

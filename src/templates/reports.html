@@ -21,10 +21,20 @@
     </div>
     <div class="box centered" style="top: 7.5vh; height: 92.5vh; background: url('static/website_background.png'); z-index: 1; flex-direction: column;">
         {% for report in reports %}
-            <div class="no-pos-box centered" style="background: #548CAC; opacity: 0.75; height: 10vh; width: 40vw; border-radius: 50em; margin-bottom: 2.5vh; margin-top: 2.5vh;">
-                <h1 class="montserrat" style="font-size: 1.2rem; position: absolute; top: 5; left: 5;">
-                    {{ report[2] }}
-                </h1>
+            <div class="no-pos-box centered" style="background: #548CAC; opacity: 0.75; height: 10vh; width: 40vw; border-radius: 50em; margin-bottom: 2.5vh; margin-top: 1.75vh;">
+                <div class="no-pos-box centered" style="background: #548CAC; flex-direction: column;">
+                    <h1 class="montserrat" style="font-size: 1.2rem;">
+                        {{ report[2] }}
+                    </h1>
+                    <h1 class="montserrat" style="font-size: 0.8rem; font-weight: 300; margin-top: -0.5em;">
+                        {{ report[0] }} mile(s) away from you
+                    </h1>
+                </div>
+                <div class="no-pos-box centered" style="background: #548CAC; flex-direction: column;">
+                    <h1 class="montserrat" style="font-size: 0.8rem; font-weight: 300;">
+                        {{ report[3] }} minutes ago
+                    </h1>
+                </div>
             </div>
         {% endfor %}
         <h1 class="montserrat" style="font-size: 1rem; color: #548CAC">
