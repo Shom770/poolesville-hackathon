@@ -14,7 +14,8 @@ app.config["SESSION_PERMANENT"] = False
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
-all_reports = []
+all_reports = [(0.1, (39.1881, -77.2335), 'Hail (1")', 1), (0.5, (39.1881, -77.2335), 'Sleet', 5), (0.9, (39.1881, -77.2335), 'Flooding', 19), (1, (37.1881, -77.2335), 'Sleet and Freezing Rain', 12), (1.2, (39.1881, -77.2335), 'Hail (0.25")', 21)]
+
 REPORT_MAPPING = {
     "hail-0.25": "Hail (0.25\")",
     "hail-0.5": "Hail (0.5\")",
@@ -146,16 +147,15 @@ def reports():
     filter_reports = []
 
     for report in all_reports:
-        dist = geopy.distance.geodesic(report[0], location).miles
+        dist = round(geopy.distance.geodesic(report[1], location).miles, 2)
         filter_reports.append(
-            (dist, *report[:-1], int((datetime.datetime.utcnow() - report[-1]).total_seconds() // 60))
+            (dist, *report[:-1], ((datetime.datetime.utcnow() - report[-1]).total_seconds() // 3600) if isinstance(report[-1], datetime.datetime) else report[-1])
         )
 
-    filter_reports = [(0.1, (39.1881, -77.2335), 'Hail (1")', 1), (0.5, (39.1881, -77.2335), 'Sleet', 5), (0.9, (39.1881, -77.2335), 'Flooding', 19), (1, (39.1881, -77.2335), 'Sleet and Freezing Rain', 12), (1.2, (39.1881, -77.2335), 'Hail (0.25")', 21)]
     filter_reports = sorted(filter_reports, key=lambda x: x[0])[:5]
     filter_reports = sorted(filter_reports, key=lambda x: x[-1])[:5]
 
-    return render_template("reports.html", reports=filter_reports)
+    return render_template("reports.html", reports=filter_reports, session_name=session["name"])
 
 
 @app.route("/make-a-report")
@@ -170,12 +170,12 @@ def make_a_report():
         response = requests.get(f"http://ip-api.com/json/{userip}").json()
         location = (response["lat"], response["lon"])
 
-        all_reports.append((location, REPORT_MAPPING[report_type], datetime.datetime.utcnow()))
+        all_reports.append((0, location, REPORT_MAPPING[report_type], datetime.datetime.utcnow()))
 
     if len(all_reports) > 100:
         all_reports = all_reports[-100:]
 
-    return render_template("make_a_report.html", type=weather_type)
+    return render_template("make_a_report.html", type=weather_type, session_name=session["name"])
 
 
 if __name__ == "__main__":
