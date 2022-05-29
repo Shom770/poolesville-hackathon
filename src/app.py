@@ -9,7 +9,9 @@ from waitress import serve
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
-
+app.config["SECRET_KEY"] = "WxWeather1!"
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 @app.route("/")
 def home():
@@ -50,18 +52,39 @@ def home():
         hour_6=new_fcst[5],
         no_alerts=bool(all_alerts),
         alert=all_alerts[page] if all_alerts else None,
-        page=page
+        page=page,
+        session_name = session["name"]
     )
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    if request.method == "POST":
+        data = {
+            "username": request.form["username"],
+            "password": request.form["password"]
+        }
+        x = requests.post("http://127.0.0.1:8001/logintosite", params=data)
+        if x.text.startswith("valid:"):
+            session["name"] = "wx"+str(x.text[6:])
+            return redirect("/")
+        else:
+            return render_template("login.html")
+    elif request.method == "GET":
+        return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session["name"] = None
+    return redirect("/")
 
 
 @app.route("/criticalupdates")
 def critical_updates():
-    return render_template("critical-updates.html")
+    return render_template(
+        "critical-updates.html",
+        session_name = session["name"]
+        )
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -83,13 +106,15 @@ def sign_up():
         x = requests.post("http://127.0.0.1:8001/adduser", params=data)
         if x.text == "User added!":
             return redirect("/login")
-    if request.method == "GET":
+    elif request.method == "GET":
         return render_template("signup.html")
 
 
 @app.route("/reports")
 def reports():
-    return render_template("reports.html")
+    return render_template("reports.html",
+    session_name = session["name"]
+    )
 
 
 if __name__ == "__main__":
