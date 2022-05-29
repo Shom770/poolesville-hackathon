@@ -89,11 +89,16 @@
     margin-top: 10%;
     border: none;
     background-color: #9BC8E2;
-    padding: 3%;
-    width: 30vw;
+    padding: 1%;
+    width: 20vw;
+    height: 5vh;
 }
 
 .report-btn:hover {
     background-color: #75A8C6;
     color: white;
+}
+
+.space-out {
+    margin: 2%;
 }

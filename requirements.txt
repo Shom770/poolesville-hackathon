@@ -1,4 +1,5 @@
 flask
+flask_session
 turbo-flask
 sqlalchemy
 flask_sqlalchemy
@@ -8,3 +9,4 @@ waitress
 requests
 suntime
 Flask-WTF
+hashlib

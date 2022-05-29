@@ -22,24 +22,112 @@
     <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1; flex-direction: column;">
       <div class="box centered" style="background: #75A8C6; top: 20vh; left: 25vw; width: 50vw; height: 10vh; border-radius: 50em;">
         <h1 class="montserrat" style="color: white; font-size: 2rem;">
-          CHOOSE A CATEGORY FOR THE REPORT
+            {% if type == "svr" %}
+                CHOOSE A SEVERE WEATHER REPORT
+            {% elif type == "winter" %}
+                CHOOSE A WINTER WEATHER REPORT
+            {% elif type == "misc" %}
+                CHOOSE A MISCELLANEOUS WEATHER REPORT
+            {% else %}
+                CHOOSE A CATEGORY TO REPORT FROM
+            {% endif %}
         </h1>
       </div>
-      <a href="javascript:;" onclick="this.href='/make-a-report?type=svr'">
-        <button class="report-btn" style="margin-top: 2%;">
-          SEVERE WEATHER
-        </button>
-      </a>
-      <a href="javascript:;" onclick="this.href='/make-a-report?type=winter'">
-        <button class="report-btn">
-          WINTER WEATHER
-        </button>
-      </a>
-      <a href="javascript:;" onclick="this.href='/make-a-report?type=misc'">
-        <button class="report-btn">
-          MISCELLANEOUS WEATHER
-        </button>
-      </a>
+        {% if type == "svr" %}
+          <div class="no-pos-box centered">
+              <div class="no-pos-box centered space-out" style="flex-direction: column; width: 20vw; height: 40vh;">
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=hail-0.25'">
+                    <button class="report-btn" style="margin-top: 2%;">Hail (0.25")</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=hail-0.5'">
+                    <button class="report-btn">Hail (0.5")</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=hail-0.75'">
+                    <button class="report-btn">Hail (0.75")</button>
+                  </a>
+              </div>
+
+              <div class="no-pos-box centered space-out" style="flex-direction: column; width: 20vw; height: 40vh;">
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=hail-1'">
+                    <button class="report-btn" style="margin-top: 2%;">Hail (1")</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=hail-2'">
+                    <button class="report-btn">Hail (2")</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=hail-3'">
+                    <button class="report-btn">Hail (3")</button>
+                  </a>
+              </div>
+          </div>
+        {% elif type == "winter" %}
+          <div class="no-pos-box centered">
+              <div class="no-pos-box centered space-out" style="flex-direction: column; width: 20vw; height: 40vh;">
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=snow'">
+                    <button class="report-btn" style="margin-top: 2%;">Snow</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=sleet'">
+                    <button class="report-btn">Sleet</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=frz'">
+                    <button class="report-btn">Freezing Rain</button>
+                  </a>
+              </div>
+
+              <div class="no-pos-box centered space-out" style="flex-direction: column; width: 20vw; height: 40vh;">
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=snow-sleet'">
+                    <button class="report-btn" style="margin-top: 2%;">Snow and Sleet</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=sleet-frz'">
+                    <button class="report-btn">Sleet and Freezing Rain</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=graupel'">
+                    <button class="report-btn">Graupel</button>
+                  </a>
+              </div>
+          </div>
+        {% elif type == "misc" %}
+          <div class="no-pos-box centered">
+              <div class="no-pos-box centered space-out" style="flex-direction: column; width: 20vw; height: 40vh;">
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=rain'">
+                    <button class="report-btn" style="margin-top: 2%;">Rain</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=drizzle'">
+                    <button class="report-btn">Drizzle</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=wind'">
+                    <button class="report-btn">Windy</button>
+                  </a>
+              </div>
+
+              <div class="no-pos-box centered space-out" style="flex-direction: column; width: 20vw; height: 40vh;">
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=blwngsnow'">
+                    <button class="report-btn" style="margin-top: 2%;">Blowing Snow</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=thunder'">
+                    <button class="report-btn">Thunder/Lightning</button>
+                  </a>
+                  <a href="javascript:;" onclick="this.href='/make-a-report?report=flood'">
+                    <button class="report-btn">Flooding</button>
+                  </a>
+              </div>
+          </div>
+        {% else %}
+          <a href="javascript:;" onclick="this.href='/make-a-report?type=svr'">
+            <button class="report-btn" style="margin-top: 2%;">
+              SEVERE WEATHER
+            </button>
+          </a>
+          <a href="javascript:;" onclick="this.href='/make-a-report?type=winter'">
+            <button class="report-btn">
+              WINTER WEATHER
+            </button>
+          </a>
+          <a href="javascript:;" onclick="this.href='/make-a-report?type=misc'">
+            <button class="report-btn">
+              MISCELLANEOUS WEATHER
+            </button>
+          </a>
+        {% endif %}
     </div>
     <div class="box centered slight-transparent" style="top: 92.5vh; height: 7.5vh; background: #548CAC; z-index: 2;">
         <h1 class="montserrat" style="color: white; font-size: 1.2rem; font-weight: 300;">

@@ -13,7 +13,7 @@ def _gridpoints(location, type_="forecastHourly"):
     return response[type_], f"{location['city']}, {location['state']}"
 
 
-def current_observations(location, utc_offset):
+def current_observations(location, utc_offset, fcst):
     url, loc = _gridpoints(location, "observationStations")
     url = SESSION.get(url).json()["features"][0]["id"]
     response = SESSION.get(url + "/observations/latest").json()["properties"]
@@ -64,12 +64,12 @@ def current_observations(location, utc_offset):
         icon = "static/snowy.png"
 
     if response["temperature"]["value"] is None:
-        temp = 0
+        temp = (fcst[0]["temperature"] - 32) / 1.8
     else:
         temp = response["temperature"]["value"]
 
     if response["windSpeed"]["value"] is None:
-        ws = 0
+        ws = int(fcst[0]["wind_speed"].split()[0])
     else:
         ws = response["temperature"]["value"]
 

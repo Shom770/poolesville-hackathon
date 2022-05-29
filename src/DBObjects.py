@@ -9,8 +9,6 @@ from sqlalchemy import (
     Enum,
     Numeric,
     DateTime
-    
-
 )
 from sqlalchemy.orm import relationship, sessionmaker
 import enum
@@ -81,7 +79,7 @@ class Posts(Base):
     @property
     def serialize(self):
         return {
-            self.id : { 
+                "post_id": self.id,
                 "author_id": self.author_id,
                 "latitude": self.latitude,
                 "longitude": self.longitude,
@@ -90,6 +88,5 @@ class Posts(Base):
                 "likes": self.likes,
                 "complaints": self.reports
             }
-        }
 
 
