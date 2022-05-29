@@ -8,4 +8,6 @@ flask_cors
 waitress
 requests
 suntime
+Flask-WTF
+hashlib
 geopy

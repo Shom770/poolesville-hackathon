@@ -201,9 +201,6 @@ def get_critical_updates(threshold):
                 }
             )   
     return json.dumps(outputjson.sort(key=lambda x: x["distance"])[::-1])
-        
-
-
 
 
 if __name__ == "__main__":
