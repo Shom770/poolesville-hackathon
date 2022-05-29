@@ -45,9 +45,9 @@ def current_observations(location, utc_offset):
             icon = "static/cloudy.png"
         else:
             icon = "static/night_mostly_cloudy.png"
-    elif text_desc == "sunny":
+    elif "sunny" in text_desc:
         icon = "static/sunny.png"
-    elif text_desc == "clear":
+    elif "clear" in text_desc:
         if daytime:
             icon = "static/sunny.png"
         else:
@@ -130,6 +130,7 @@ def hourly_forecast(location, go_out=24):
                 icon = "static/sunny.png"
             else:
                 icon = "static/night_clear.png"
+
         elif 'thunderstorm' in forecast:
             icon = "static/thunderstorms.png"
         elif 'rain' in forecast or 'showers' in forecast:
@@ -176,9 +177,17 @@ def current_alerts(location, include_text=False):
         if alert_prop["onset"] is None:
             continue
 
+        start_time = datetime.datetime.fromisoformat(
+            alert_prop["onset"]
+        )
+        end_time = datetime.datetime.fromisoformat(
+            alert_prop["expires"]
+        )
+        start, end = min((start_time, end_time)), max(start_time, end_time)
+
         filtered_json.append({
-            "start_time": datetime.datetime.fromisoformat(alert_prop["onset"]).strftime('%I:%M %p').lower().lstrip("0"),
-            "end_time": datetime.datetime.fromisoformat(alert_prop["expires"]).strftime('%I:%M %p').lower().lstrip("0"),
+            "start_time": start.strftime('%I:%M %p (%m/%d/%Y)').lower().lstrip("0"),
+            "end_time": end.strftime('%I:%M %p (%m/%d/%Y)').lower().lstrip("0"),
             "name": alert_prop["event"],
             "severity": alert_prop["severity"],
             "certainty": alert_prop["certainty"],
