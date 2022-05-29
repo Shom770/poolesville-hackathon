@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="static/stylesheet.css">
+    <link rel="stylesheet" href="static/criticalupdates.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -19,9 +20,138 @@
     </div>
     <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1;">
 
+        <div style="position: absolute; top: 15vh; left: 6vw; width: 15vw; height: 10vh">
+            <h1 class="montserrat-legendtext">Set Distance:</h1>
+            <input type="number" placeholder="#" style="height: 2vw; width: 5vw; position: absolute; top: 5vh">
+            <button class="setbutton"; style="position: absolute; top: 5.5vh; left: 7.5vw">Set</button>
+        </div>
+
+        <div class = "commentbox centered">
+            <span  style="position: absolute; top: 20vh; left: 22vw">
+                <input type="text" placeholder="Write your comment here">
+                <button class="sendbutton"; style="position: absolute; top: -1vh; left: 48vw">Send</button>
+            </span>
+            <div>
+                <!-- first update -->
+                <div class="commentbox" style="border-bottom: solid; position: absolute; top: 35vh; left: 22vw; height: 10vh; width: 55vw">
+                    <div class="realleveliconcircle centered" style="position: absolute; top: 1vh; left: 0vw">
+                        <h1 id="trust" class="montserrat"></h1>
+                    </div>
+                    <div class="commentbox" style="position: absolute; top: 1vh; left: 3.5vw; height: 7vh; width: 35vw">
+                        <h1 id="message" class="montserrat-legendtext" style="position: absolute; top: -1vh; left: 0vw; line-height: 1.1em"></h1>
+                    </div>
+                    <div class="commentbox" style="position: absolute; top: 1vh; left: 40vw; height: 4vh; width: 18vw">
+                        <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 0vw; line-height: 1.1em">posted</h1>
+                        <h1 id="time" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 3.2vw; line-height: 1.1em"></h1>
+                        <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 4.4vw; line-height: 1.1em">min ago, </h1>
+                        <h1 id="distance" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 8.4vw; line-height: 1.1em"></h1>
+                        <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 9.8vw; line-height: 1.1em">miles away</h1>
+                    </div>
+                    <div class="commentbox" style="position: absolute; bottom: 1vh; right: 4vw; height: 3vh; width: 5vw">
+                        <h1 id="likes" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; bottom: -1vh; left: 0vw; line-height: 1.1em"></h1>
+                        <button style="background-color: #548CAC; opacity: 100%; border: none; position: absolute; left: .7vw">
+                            <img src="static/heart-icon-y1k.png" style="opacity: 100%"; height="16.85" width="16.85"/>
+                        </button>
+                    </div>
+                    <div class="commentbox" style="opacity: 100%; position: absolute; bottom: 1vh; right: 0vw; height: 3vh; width: 5vw">
+                        <button style="background-color: #548CAC; opacity: 100%; border: none">
+                            <img src="static/1200px-White_flag_icon.svg.png" style="opacity: 100%"; height="16.85" width="12"/>
+                        </button>
+                    </div>
+                    <script>
+                        // for (let i = 1; i <= 1; i++) {
+                        fetch("static/sample.json")
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(len(data))
+                                document.getElementById('trust').innerHTML = data[i.toString()]["trust"];
+                                document.getElementById('message').innerHTML = data[i.toString()]["message"];
+                                document.getElementById('time').innerHTML = data[i.toString()]["time"];
+                                document.getElementById('distance').innerHTML = data[i.toString()]["distance"];
+                                document.getElementById('likes').innerHTML = data[i.toString()]["likes"];
+                            })
+                        // }
+
+                    </script>
+                </div>
+                <!-- end of first update -->
+<!--                &lt;!&ndash; second update &ndash;&gt;-->
+<!--                <div class="commentbox" style="border-bottom: solid; position: absolute; top: 46vh; left: 22vw; height: 10vh; width: 55vw">-->
+<!--                    <div class="realleveliconcircle centered" style="position: absolute; top: 1vh; left: 0vw">-->
+<!--                        <h1 id="trust2" class="montserrat"></h1>-->
+<!--                    </div>-->
+<!--                    <div class="commentbox" style="position: absolute; top: 1vh; left: 3.5vw; height: 7vh; width: 35vw">-->
+<!--                        <h1 id="message2" class="montserrat-legendtext" style="position: absolute; top: -1vh; left: 0vw; line-height: 1.1em"></h1>-->
+<!--                    </div>-->
+<!--                    <div class="commentbox" style="position: absolute; top: 1vh; left: 40vw; height: 4vh; width: 18vw">-->
+<!--                        <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 0vw; line-height: 1.1em">posted</h1>-->
+<!--                        <h1 id="time2" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 3.2vw; line-height: 1.1em"></h1>-->
+<!--                        <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 4.4vw; line-height: 1.1em">min ago, </h1>-->
+<!--                        <h1 id="distance2" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 8.4vw; line-height: 1.1em"></h1>-->
+<!--                        <h1 class="montserrat-legendtext" style="font-size: .8rem; position: absolute; top: -1vh; left: 9.8vw; line-height: 1.1em">miles away</h1>-->
+<!--                    </div>-->
+<!--                    <div class="commentbox" style="position: absolute; bottom: 1vh; right: 4vw; height: 3vh; width: 5vw">-->
+<!--                        <h1 id="likes2" class="montserrat-legendtext" style="font-size: .8rem; position: absolute; bottom: -1vh; left: 0vw; line-height: 1.1em"></h1>-->
+<!--                        <button style="background-color: #548CAC; opacity: 100%; border: none; position: absolute; left: .7vw">-->
+<!--                            <img src="static/heart-icon-y1k.png" style="opacity: 100%"; height="16.85" width="16.85"/>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div class="commentbox" style="opacity: 100%; position: absolute; bottom: 1vh; right: 0vw; height: 3vh; width: 5vw">-->
+<!--                        <button style="background-color: #548CAC; opacity: 100%; border: none">-->
+<!--                            <img src="static/1200px-White_flag_icon.svg.png" style="opacity: 100%"; height="16.85" width="12"/>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <script>-->
+<!--                        fetch("static/sample.json")-->
+<!--                            .then(response => response.json())-->
+<!--                            .then(data => {-->
+<!--                                console.log(data["1"]["trust"])-->
+<!--                                document.getElementById('trust2').innerHTML = data["1"]["trust"];-->
+<!--                                document.getElementById('message2').innerHTML = data["1"]["message"];-->
+<!--                                document.getElementById('time2').innerHTML = data["1"]["time"];-->
+<!--                                document.getElementById('distance2').innerHTML = data["1"]["distance"];-->
+<!--                                document.getElementById('likes2').innerHTML = data["1"]["likes"];-->
+<!--                            })-->
+<!--                    </script>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; end of second update &ndash;&gt;-->
+            </div>
+
+        </div>
+
+        <div style="position: absolute; top: 15vh; right: 7vw; width: 10vw; height: 10vh">
+            <div>
+                <div class="leveliconcircle centered">
+                    <h1 class="montserrat-icon">R</h1>
+                </div>
+                <h1 class="montserrat-legendtext" style="position: absolute; top: -1vh; left: 2.5vw">Regular</h1>
+            </div>
+
+            <div>
+                <div class="leveliconcircle centered" style="position: absolute; top: 6vh">
+                    <h1 class="montserrat-icon">M</h1>
+                </div>
+                <h1 class="montserrat-legendtext" style="position: absolute; top: 5vh; left: 2.5vw">Member</h1>
+            </div>
+
+            <div>
+                <div class="leveliconcircle centered" style="position: absolute; top: 12vh">
+                    <h1 class="montserrat-icon">B</h1>
+                </div>
+                <h1 class="montserrat-legendtext" style="position: absolute; top: 11vh; left: 2.5vw">Basic</h1>
+            </div>
+
+            <div>
+                <div class="leveliconcircle centered" style="position: absolute; top: 18vh">
+                    <h1 class="montserrat-icon">N</h1>
+                </div>
+                <h1 class="montserrat-legendtext" style="position: absolute; top: 17vh; left: 2.5vw">New</h1>
+            </div>
+        </div>
+
     </div>
     <div class="box centered slight-transparent" style="top: 92.5vh; height: 7.5vh; background: #548CAC; z-index: 2;">
-        <h1 class="montserrat" style="color: white; font-size: 1.2rem; font-weight: 300;">
+        <h1 class="montserrat" style="text-align: center">
             made with <3 by saraansh, rehan, and shayaan
         </h1>
     </div>
