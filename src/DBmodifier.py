@@ -6,6 +6,7 @@ from DBObjects import (
 )
 from datetime import datetime
 
+
 class DBModifier():
 
     def __init__(self, engine, session, connection):
@@ -216,7 +217,20 @@ class DBModifier():
     ) -> tuple:
         user = self.get_user_from_username(username=username)[0]
         return (user.id, user.password)
+    
+    def get_coordinates(
+        self,
+        client_user_id: str
+    ) -> tuple:
+        user = self.get_user(user_id=int(client_user_id[2:]))
+        return (user.latitude, user.longitude)
         
+    def get_trust_level(
+        self,
+        user_id: int
+    ) -> str:
+        user = self.get_user(user_id=user_id)
+        return user.trust_level.name
         
 
 

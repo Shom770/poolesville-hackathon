@@ -1,7 +1,7 @@
 import datetime
 
-import requests
 from flask import Flask, render_template, request, session, redirect
+import geopy.distance
 import requests
 from flask_session import Session
 
@@ -35,6 +35,10 @@ REPORT_MAPPING = {
     "thunder": "Thunder/Lightning",
     "flood": "Flooding"
 }
+
+app.config["SECRET_KEY"] = "WxWeather1!"
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 
 @app.route("/")
@@ -75,18 +79,39 @@ def home():
         hour_6=new_fcst[5],
         no_alerts=bool(all_alerts),
         alert=all_alerts[page] if all_alerts else None,
-        page=page
+        page=page,
+        session_name = session["name"]
     )
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    if request.method == "POST":
+        data = {
+            "username": request.form["username"],
+            "password": request.form["password"]
+        }
+        x = requests.post("http://127.0.0.1:8001/logintosite", params=data)
+        if x.text.startswith("valid:"):
+            session["name"] = "wx"+str(x.text[6:])
+            return redirect("/")
+        else:
+            return render_template("login.html")
+    elif request.method == "GET":
+        return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session["name"] = None
+    return redirect("/")
 
 
 @app.route("/criticalupdates")
 def critical_updates():
-    return render_template("critical-updates.html")
+    return render_template(
+        "critical-updates.html",
+        session_name = session["name"]
+        )
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -108,15 +133,12 @@ def sign_up():
         x = requests.post("http://127.0.0.1:8001/adduser", params=data)
         if x.text == "User added!":
             return redirect("/login")
-    if request.method == "GET":
+    elif request.method == "GET":
         return render_template("signup.html")
 
 
 @app.route("/reports")
 def reports():
-    def distance(c1, c2):
-        return (abs(c2[0] ** 2 - c1[0] ** 2) + abs(c2[1] ** 2 - c1[1] ** 2)) ** 0.5
-
     userip = requests.get('https://api.ipify.org').text
     response = requests.get(f"http://ip-api.com/json/{userip}").json()
     location = (response["lat"], response["lon"])
@@ -124,8 +146,15 @@ def reports():
     filter_reports = []
 
     for report in all_reports:
-        dist = distance(location, report[0])
-    return render_template("reports.html")
+        dist = geopy.distance.geodesic(report[0], location).miles
+        filter_reports.append(
+            (dist, *report[:-1], int((datetime.datetime.utcnow() - report[-1]).total_seconds() // 60))
+        )
+
+    filter_reports = sorted(filter_reports, key=lambda x: x[0])[:5]
+    filter_reports = [(0.0, (39.1881, -77.2335), 'Hail (1")', 0), (0.0, (39.1881, -77.2335), 'Sleet', 0), (0.0, (39.1881, -77.2335), 'Flooding', 0), (0.0, (39.1881, -77.2335), 'Sleet and Freezing Rain', 0), (0.0, (39.1881, -77.2335), 'Hail (0.25")', 0)]
+
+    return render_template("reports.html", reports=filter_reports)
 
 
 @app.route("/make-a-report")

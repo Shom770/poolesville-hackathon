@@ -7,6 +7,8 @@ from sqlalchemy import create_engine
 from waitress import serve
 from datetime import datetime
 import hashlib
+import geopy.distance
+import json
 
 app = Flask(__name__)
 CORS(app, CORS_ORIGINS="*") #we will not get api bullied >:(
@@ -44,7 +46,7 @@ def login():
     userdata = db.id_and_pass(data["username"])
     passwordhash = hashlib.md5(data["password"].encode("utf-8")).hexdigest()
     if passwordhash == userdata[1]:
-        return userdata[0]
+        return "valid:" + str(userdata[0])
     else:
         return "invalid"
 
@@ -177,7 +179,28 @@ def modify_post():
     )
     
     db.session.commit()
-    return "Modified Post!"    
+    return "Modified Post!"
+
+@app.route("/get_critical_updates/<threshold>", methods=["GET"])
+def get_critical_updates(threshold):
+    posts = db.get_post()
+    outputjson = []
+    for post in posts:
+        c1 = (post.latitude, post.longitude)
+        c2 = db.get_coordinates(session["name"])
+        distance = geopy.distance.geodesic(c1, c2).miles
+        if distance <= threshold:
+            outputjson.append(
+                {
+                "post_id": post.id,
+                "trust": db.get_trust_level(user_id=db.get_post_owner(post.id))[0:1].upper(),
+                "message": post.message,
+                "time": post.time,
+                "distance": distance,
+                "likes": len(db.get_likes_of_post(post_id=post.id))-1
+                }
+            )   
+    return json.dumps(outputjson.sort(key=lambda x: x["distance"])[::-1])
 
 
 if __name__ == "__main__":

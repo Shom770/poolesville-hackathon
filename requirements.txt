@@ -10,3 +10,4 @@ requests
 suntime
 Flask-WTF
 hashlib
+geopy

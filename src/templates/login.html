@@ -21,7 +21,7 @@
         <h1><a class="page" href={{ url_for("reports")}}>reports</a></h1>
     </div>
     <div class="box centered" style="height: 100vh; background: url('static/website_background.png'); z-index: 1;">
-        <div class="login-div centered">
+        <form class="login-div centered" method="POST">
             <h1 class="montserrat">
                 LOGIN
             </h1>
@@ -30,12 +30,12 @@
             <h2 class="montserrat" style="font-weight: 300; font-size: 1.2rem; margin-top: 7.5%;">
                 USERNAME
             </h2>
-            <input type="text" placeholder="Enter username here...">
+            <input type="text" name="username" placeholder="Enter username here...">
 
             <h2 class="montserrat" style="font-weight: 300; font-size: 1.2rem; margin-top: 7.5%">
                 PASSWORD
             </h2>
-            <input type="text" placeholder="Enter password here...">
+            <input type="text" name="password" style="-webkit-text-security: square" placeholder="Enter password here...">
 
             <button class="log-in">LOG IN</button>
 
@@ -49,7 +49,7 @@
                     </b>
                 </span>
             </p>
-        </div>
+        </form>
     </div>
     <div class="box centered slight-transparent" style="top: 92.5vh; height: 7.5vh; background: #548CAC; z-index: 2;">
         <h1 class="montserrat" style="color: white; font-size: 1.2rem; font-weight: 300;">
