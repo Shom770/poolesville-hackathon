@@ -1,0 +1,23 @@
+{
+  "1": {
+    "trust": "R",
+    "message": "I'm like yeah she's fine i wonder when she'll be mine I walk past and press rewind",
+    "time": 35,
+    "distance": 2.5,
+    "likes": 7
+  },
+  "2": {
+    "trust": "M",
+    "message": "message text2",
+    "time": 25,
+    "distance": 1.0,
+    "likes": 2
+  },
+  "3": {
+    "trust": "B",
+    "message": "message text3",
+    "time": 19,
+    "distance": 4.0,
+    "likes": 5
+  }
+}
