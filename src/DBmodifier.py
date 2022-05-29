@@ -22,6 +22,15 @@ class DBModifier():
         if user_id is not None:
             query = query.filter(Users.id == user_id)
         return query.all() if query is not None else None
+    
+    def get_user_from_username(
+        self,
+        username: str
+    ) -> Optional[Users]:
+        query = self.session.query(Users)
+        if username is not None:
+            query = query.filter(Users.username == username)
+        return query.all() if query is not None else None
 
     def add_user(
         self,
@@ -68,8 +77,8 @@ class DBModifier():
         longitude: float,
         time: datetime,
         message: str,
-        likes: int,
-        reports: int
+        likes: str,
+        reports: str
     ):
         if not self.get_post(post_id=id, user_id=None):
             post_object = Posts(
@@ -200,6 +209,15 @@ class DBModifier():
     ) -> int:
         user = self.get_user(user_id = user_id)[0]
         return user.num_of_posts
+    
+    def id_and_pass(
+        self,
+        username: str
+    ) -> tuple:
+        user = self.get_user_from_username(username=username)[0]
+        return (user.id, user.password)
+        
+        
 
 
 

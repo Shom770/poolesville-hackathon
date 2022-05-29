@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker,scoped_session
 from sqlalchemy import create_engine
 from waitress import serve
 from datetime import datetime
+import hashlib
 
 app = Flask(__name__)
 CORS(app, CORS_ORIGINS="*") #we will not get api bullied >:(
@@ -37,6 +38,16 @@ def get_user_info(userid):
         [user.serialize for user in refresh_db(db).get_user(user_id=userid)]
     )
 
+@app.route("/logintosite", methods=["POST"])
+def login():
+    data = request.args
+    userdata = db.id_and_pass(data["username"])
+    passwordhash = hashlib.md5(data["password"].encode("utf-8")).hexdigest()
+    if passwordhash == userdata[1]:
+        return userdata[0]
+    else:
+        return "invalid"
+
 @app.route("/adduser", methods=["POST"])
 def add_user():
     #commit data before adding idk why there would be data to commit dude i hate sql
@@ -45,7 +56,7 @@ def add_user():
 
     db.add_user(
         username = data["username"],
-        password = data["password"],
+        password = hashlib.md5(data["password"].encode("utf-8")).hexdigest(),
         latitude = float(data["latitude"]),
         longitude = float(data["longitude"]),
         num_of_likes = int(data["num_of_likes"]),

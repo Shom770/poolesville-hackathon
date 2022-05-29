@@ -1,15 +1,22 @@
 import datetime
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
+import requests
+from flask_session import Session
 
 from weather_information import current_alerts, current_observations, hourly_forecast
+from waitress import serve
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
 
 
 @app.route("/")
 def home():
-    location = 35.61, -106.1
+
+    userip = requests.get('https://api.ipify.org').text
+    response = requests.get(f"http://ip-api.com/json/{userip}").json()
+    location = (response["lat"], response["lon"])
 
     forecast, city_name, utc_offset = hourly_forecast(location)
     cur_time = datetime.datetime.utcnow() - datetime.timedelta(hours=utc_offset * -1)
@@ -42,12 +49,12 @@ def home():
         hour_5=new_fcst[4],
         hour_6=new_fcst[5],
         no_alerts=bool(all_alerts),
-        alert=all_alerts[page],
+        alert=all_alerts[page] if all_alerts else None,
         page=page
     )
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
     return render_template("login.html")
 
@@ -57,9 +64,27 @@ def critical_updates():
     return render_template("critical-updates.html")
 
 
-@app.route("/signup")
+@app.route("/signup", methods=["GET", "POST"])
 def sign_up():
-    return render_template("signup.html")
+    if request.method == "POST":
+        userip = requests.get('https://api.ipify.org').text
+        response = requests.get(f"http://ip-api.com/json/{userip}").json()
+        location = (response["lat"], response["lon"])
+        data = {
+            "username": request.form["username"],
+            "password": request.form["password"],
+            "latitude": float(location[0]),
+            "longitude": float(location[1]),
+            "num_of_likes": 0,
+            "num_of_posts": 0,
+            "num_of_complaints": 0,
+            "trust_level": "new"
+        }
+        x = requests.post("http://127.0.0.1:8001/adduser", params=data)
+        if x.text == "User added!":
+            return redirect("/login")
+    if request.method == "GET":
+        return render_template("signup.html")
 
 
 @app.route("/reports")
@@ -68,4 +93,8 @@ def reports():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    serve(
+        app,
+        host="0.0.0.0",
+        port="8004"
+    )
