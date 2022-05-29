@@ -3,5 +3,7 @@ turbo-flask
 sqlalchemy
 flask_sqlalchemy
 pymysql
+flask_cors
+waitress
 requests
 suntime

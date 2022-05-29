@@ -18,7 +18,6 @@ database = DBModifier(engine, session, connection)
 
 print("Adding user")
 database.add_user(
-    id = "wx1",
     username = "saraansh",
     password = "secret",
     latitude = 39.14300959208755,
@@ -31,17 +30,16 @@ database.add_user(
 
 print("Adding post")
 database.add_post(
-    id = 1,
-    author_id = "wx1",
+    author_id = 1,
     latitude = 39.14300959208755,
     longitude = -77.28741232019671,
     time=datetime.now(),
     message= "speaking straight facts no cap no cap",
-    likes = 4,
-    reports = 2,
+    likes = "",
+    reports = "",
 )
 
-print(database.get_post(1, user_id=None))
+print(database.get_post(1))
 database.session.commit()
 
 

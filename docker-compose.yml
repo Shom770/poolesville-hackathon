@@ -16,6 +16,7 @@ services:
 
     weather-tracker-server:
         build: .
+        command: [/bin/bash, -c, "python3 -m Database & (sleep 10s && python3 -m DBApi)"]
         stdin_open: true
         ports:
             - 8000:8000
