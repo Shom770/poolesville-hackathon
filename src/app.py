@@ -46,10 +46,10 @@ Session(app)
 
 @app.route("/")
 def home():
-    # userip = requests.get('https://api.ipify.org').text
-    # response = requests.get(f"http://ip-api.com/json/{userip}").json()
-    # location = (response["lat"], response["lon"])
-    location = (35.04, -106.61)
+    userip = requests.get('https://api.ipify.org').text
+    response = requests.get(f"http://ip-api.com/json/{userip}").json()
+    location = (response["lat"], response["lon"])
+    # location = (35.04, -106.61)
 
     forecast, city_name, utc_offset = hourly_forecast(location)
     cur_time = datetime.datetime.utcnow() - datetime.timedelta(hours=utc_offset * -1)
@@ -84,7 +84,6 @@ def home():
         no_alerts=bool(all_alerts),
         alert=all_alerts[page] if all_alerts else None,
         page=page,
-        session_name = session["name"]
     )
 
 
