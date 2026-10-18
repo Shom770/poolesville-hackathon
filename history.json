@@ -1,0 +1,19 @@
+{
+ "repo": "Shom770/poolesville-hackathon",
+ "events": [
+  {
+   "type": "scan",
+   "at": "2026-10-18T04:53:40Z",
+   "spend_usd": 0,
+   "kwh": [
+    0,
+    0
+   ],
+   "avoidable_usd": 0,
+   "calls": 0,
+   "sites": [],
+   "estimate": true,
+   "assumption": "each route or job runs 1,000 times a month"
+  }
+ ]
+}
